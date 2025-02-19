@@ -15,12 +15,10 @@
 
 .user__name {
   margin: 0;
-  padding: 0;
 }
 
 .user__description {
-  margin: 0;
-  padding: 0;
+  margin: 12px 0 0;
 }
 
 .user__column {
