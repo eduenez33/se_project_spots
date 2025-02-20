@@ -34,6 +34,12 @@
   background: none;
   display: flex;
   gap: 8px;
+  opacity: 70%;
+}
+
+.user__edit-button:hover {
+  opacity: 100%;
+  cursor: pointer;
 }
 
 .user__add-button {
@@ -42,7 +48,12 @@
   padding: 18px 32px;
   border-radius: 8px;
   border: none;
-  background-color: #000;
+  background-color: #212121;
   display: flex;
   gap: 8px;
+}
+
+.user__add-button:hover {
+  opacity: 80%;
+  cursor: pointer;
 }

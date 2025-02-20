@@ -30,3 +30,8 @@
   width: 23px;
   height: 20px;
 }
+
+.card__like-button:hover {
+  cursor: pointer;
+  opacity: 100%;
+}
