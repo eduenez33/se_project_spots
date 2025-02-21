@@ -19,8 +19,8 @@ In it's current state, Spots is a static web page that displays a user profile a
 - Media queries
 - BEM methodology
 
-![Desktop preview](https://ibb.co/GQydfGfF)
-![Mobile Preview](https://ibb.co/rRX6W614)
+![Desktop preview](https://i.ibb.co/TM6wDJDr/Screenshot-2025-02-21-at-4-10-34-PM.png)
+![Mobile Preview](https://i.ibb.co/Kp8q1q3F/Screenshot-2025-02-21-at-4-10-59-PM.png)
 
 **Links**
 
