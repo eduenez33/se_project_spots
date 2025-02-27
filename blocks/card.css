@@ -18,6 +18,7 @@
 }
 
 .card__title {
+  color: #212121;
   margin: 0;
   font-size: 20px;
   line-height: 1.2;
