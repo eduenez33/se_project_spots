@@ -25,4 +25,5 @@ In it's current state, Spots is a static web page that displays a user profile a
 **Links**
 
 - [Link to the project on Figma](https://www.figma.com/file/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project-%E2%80%94-Spots?type=design&node-id=2%3A60&mode=design&t=afgNFybdorZO6cQo-1)
+- [Link to video demonstration](https://www.loom.com/share/c6569043b37f4f239f1d723ac3d0e162?sid=ff2db551-528d-4e19-be98-377ac71cc7ca)
 - [Link to the deployed project](https://eduenez33.github.io/se_project_spots/)
