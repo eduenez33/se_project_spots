@@ -28,3 +28,11 @@ const initialCards = [
     link: "https://unsplash.com/photos/photo-of-mountain-and-city-scenery-mHDdwWwoVvw",
   },
 ];
+
+function toggleModal() {
+  editModal.classList.toggle("modal_opened");
+}
+
+profileEditButton.addEventListener("click", toggleModal);
+
+closeModalButton.addEventListener("click", toggleModal);
