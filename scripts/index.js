@@ -1,3 +1,7 @@
+let editModal = document.querySelector("#edit-modal");
+let profileEditButton = document.querySelector(".profile__edit-button");
+let closeModalButton = editModal.querySelector(".modal__close-button");
+
 const initialCards = [
   {
     name: "Santa Barbara",
