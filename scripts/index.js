@@ -33,10 +33,20 @@ const initialCards = [
   },
 ];
 
-function toggleModal() {
-  editModal.classList.toggle("modal_opened");
+function setModalInputValues() {
+  editModalNameInput.value = profileName.textContent;
+  editModalDescriptionInput.value = profileDescription.textContent;
 }
 
-profileEditButton.addEventListener("click", toggleModal);
+function openEditModal() {
+  setModalInputValues();
+  editModal.classList.add("modal_opened");
+}
 
-closeModalButton.addEventListener("click", toggleModal);
+function closeEditModal() {
+  editModal.classList.remove("modal_opened");
+}
+
+profileEditButton.addEventListener("click", openEditModal);
+
+editModalCloseButton.addEventListener("click", closeEditModal);
