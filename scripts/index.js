@@ -43,6 +43,19 @@ function closeEditModal() {
   editModal.classList.remove("modal_opened");
 }
 
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+
+  profileName.textContent = editModalNameInput.value;
+  profileDescription.textContent = editModalDescriptionInput.value;
+
+  closeEditModal();
+}
+
 profileEditButton.addEventListener("click", openEditModal);
 
 editModalCloseButton.addEventListener("click", closeEditModal);
+
+editModal
+  .querySelector(".modal__form")
+  .addEventListener("submit", handleProfileFormSubmit);
