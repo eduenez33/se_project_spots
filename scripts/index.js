@@ -33,13 +33,9 @@ const initialCards = [
   },
 ];
 
-function setModalInputValues() {
+function openEditModal() {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
-}
-
-function openEditModal() {
-  setModalInputValues();
   editModal.classList.add("modal_opened");
 }
 
