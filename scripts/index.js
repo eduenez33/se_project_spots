@@ -5,6 +5,7 @@ const editModal = document.querySelector("#edit-modal");
 const editModalCloseButton = editModal.querySelector(".modal__close-button");
 const editModalNameInput = editModal.querySelector("#name");
 const editModalDescriptionInput = editModal.querySelector("#description");
+const cardTemplate = document.querySelector("#card-template");
 
 const initialCards = [
   {
