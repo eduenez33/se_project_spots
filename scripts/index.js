@@ -1,10 +1,10 @@
-let profileEditButton = document.querySelector(".profile__edit-button");
-let profileName = document.querySelector(".profile__name");
-let profileDescription = document.querySelector(".profile__description");
-let editModal = document.querySelector("#edit-modal");
-let editModalCloseButton = editModal.querySelector(".modal__close-button");
-let editModalNameInput = editModal.querySelector("#name");
-let editModalDescriptionInput = editModal.querySelector("#description");
+const profileEditButton = document.querySelector(".profile__edit-button");
+const profileName = document.querySelector(".profile__name");
+const profileDescription = document.querySelector(".profile__description");
+const editModal = document.querySelector("#edit-modal");
+const editModalCloseButton = editModal.querySelector(".modal__close-button");
+const editModalNameInput = editModal.querySelector("#name");
+const editModalDescriptionInput = editModal.querySelector("#description");
 
 const initialCards = [
   {
