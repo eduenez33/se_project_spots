@@ -60,3 +60,21 @@ editModalCloseButton.addEventListener("click", closeEditModal);
 editModal
   .querySelector(".modal__form")
   .addEventListener("submit", handleProfileFormSubmit);
+
+function getCardElement(data) {
+  const cardElement = cardTemplate.content
+    .querySelector(".card")
+    .cloneNode(true);
+
+  cardElement.querySelector(".card__title").textContent = data.name;
+  cardElement.querySelector(".card__image").src = data.link;
+  cardElement.querySelector(".card__image").alt = data.name;
+
+  return cardElement;
+}
+
+for (let i = 0; i < initialCards.length; i++) {
+  document
+    .querySelector(".cards__list")
+    .append(getCardElement(initialCards[i]));
+}
