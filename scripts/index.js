@@ -6,6 +6,7 @@ const editModalCloseButton = editModal.querySelector(".modal__close-button");
 const editModalNameInput = editModal.querySelector("#name");
 const editModalDescriptionInput = editModal.querySelector("#description");
 const cardTemplate = document.querySelector("#card-template");
+const modalForm = editModal.querySelector(".modal__form");
 
 const initialCards = [
   {
@@ -57,18 +58,19 @@ profileEditButton.addEventListener("click", openEditModal);
 
 editModalCloseButton.addEventListener("click", closeEditModal);
 
-editModal
-  .querySelector(".modal__form")
-  .addEventListener("submit", handleProfileFormSubmit);
+modalForm.addEventListener("submit", handleProfileFormSubmit);
 
 function getCardElement(data) {
   const cardElement = cardTemplate.content
     .querySelector(".card")
     .cloneNode(true);
 
-  cardElement.querySelector(".card__title").textContent = data.name;
-  cardElement.querySelector(".card__image").src = data.link;
-  cardElement.querySelector(".card__image").alt = data.name;
+  const cardElementTitle = cardElement.querySelector(".card__title");
+  const cardElementImage = cardElement.querySelector(".card__image");
+
+  cardElementTitle.textContent = data.name;
+  cardElementImage.src = data.link;
+  cardElementImage.alt = data.name;
 
   return cardElement;
 }
