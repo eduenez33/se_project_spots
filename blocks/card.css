@@ -40,9 +40,19 @@
   height: 20px;
 }
 
+.card__like-button_liked {
+  background: transparent url(../images/icon_heart_red.svg) no-repeat center /
+    contain;
+  opacity: 100%;
+}
+
 .card__like-button:hover {
   cursor: pointer;
   opacity: 100%;
+}
+
+.card__like-button_liked:hover {
+  opacity: 40%;
 }
 
 @media screen and (max-width: 690px) {
