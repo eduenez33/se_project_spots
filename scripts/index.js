@@ -68,7 +68,26 @@ profileEditButton.addEventListener("click", openEditModal);
 
 editModalCloseButton.addEventListener("click", closeEditModal);
 
-modalForm.addEventListener("submit", handleProfileFormSubmit);
+editModalForm.addEventListener("submit", handleProfileFormSubmit);
+
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+
+  console.log(newPostModalImageUrl.value);
+  console.log(newPostModalCaption.value);
+
+  newPostModal.classList.remove("modal_opened");
+}
+
+newPostButton.addEventListener("click", () => {
+  newPostModal.classList.add("modal_opened");
+});
+
+newPostModalCloseButton.addEventListener("click", () => {
+  newPostModal.classList.remove("modal_opened");
+});
+
+newPostModalForm.addEventListener("submit", handleAddCardSubmit);
 
 function getCardElement(data) {
   const cardElement = cardTemplate.content
