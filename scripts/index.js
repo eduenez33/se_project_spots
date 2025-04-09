@@ -109,9 +109,15 @@ function getCardElement(data) {
   const cardElementTitle = cardElement.querySelector(".card__title");
   const cardElementImage = cardElement.querySelector(".card__image");
   const likeButton = cardElement.querySelector(".card__like-button");
+  const trashButton = cardElement.querySelector(".card__trash-button");
 
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_liked");
+  });
+
+  trashButton.addEventListener("click", () => {
+    cardElement.remove();
+    cardElement = null;
   });
 
   cardElementTitle.textContent = data.name;
