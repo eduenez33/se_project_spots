@@ -5,8 +5,18 @@ const editModal = document.querySelector("#edit-modal");
 const editModalCloseButton = editModal.querySelector(".modal__close-button");
 const editModalNameInput = editModal.querySelector("#name");
 const editModalDescriptionInput = editModal.querySelector("#description");
+const editModalForm = editModal.querySelector(".modal__form");
+
+const newPostButton = document.querySelector(".profile__add-button");
+const newPostModal = document.querySelector("#new-post-modal");
+const newPostModalCloseButton = newPostModal.querySelector(
+  ".modal__close-button"
+);
+const newPostModalImageUrl = newPostModal.querySelector("#card-image");
+const newPostModalCaption = newPostModal.querySelector("#card-caption");
+const newPostModalForm = newPostModal.querySelector(".modal__form");
+
 const cardTemplate = document.querySelector("#card-template");
-const modalForm = editModal.querySelector(".modal__form");
 
 const initialCards = [
   {
