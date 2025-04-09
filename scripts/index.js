@@ -104,8 +104,6 @@ function getCardElement(data) {
   return cardElement;
 }
 
-for (let i = 0; i < initialCards.length; i++) {
-  document
-    .querySelector(".cards__list")
-    .append(getCardElement(initialCards[i]));
-}
+initialCards.forEach((card) => {
+  document.querySelector(".cards__list").append(getCardElement(card));
+});
