@@ -21,6 +21,8 @@ const previewModal = document.querySelector("#preview-modal");
 const previewModalCloseButton = previewModal.querySelector(
   ".modal__close-button"
 );
+const previewModalImage = previewModal.querySelector(".modal__image");
+const previewModalCaption = previewModal.querySelector(".modal__caption");
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
 
@@ -102,8 +104,7 @@ function handleAddCardSubmit(evt) {
   cardList.prepend(getCardElement(newCardData));
 
   closeModal(newPostModal);
-  newPostModalCaption.value = "";
-  newPostModalImageUrl.value = "";
+  evt.target.reset();
 }
 
 newPostButton.addEventListener("click", () => {
@@ -131,9 +132,6 @@ function getCardElement(data) {
   });
 
   cardElementImage.addEventListener("click", () => {
-    const previewModalImage = previewModal.querySelector(".modal__image");
-    const previewModalCaption = previewModal.querySelector(".modal__caption");
-
     previewModalImage.src = data.link;
     previewModalImage.alt = data.name;
     previewModalCaption.textContent = data.name;
