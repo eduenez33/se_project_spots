@@ -16,6 +16,7 @@ const newPostModalCloseButton = newPostModal.querySelector(
 const newPostModalImageUrl = newPostModal.querySelector("#card-image");
 const newPostModalCaption = newPostModal.querySelector("#card-caption");
 const newPostModalForm = newPostModal.querySelector(".modal__form");
+const cardSubmitButton = newPostModal.querySelector(".modal__submit-button");
 
 const previewModal = document.querySelector("#preview-modal");
 const previewModalCloseButton = previewModal.querySelector(
@@ -73,6 +74,11 @@ closeButtons.forEach((button) => {
 function openEditModal() {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
+  resetValidation(
+    editModalForm,
+    [editModalNameInput, editModalDescriptionInput],
+    settings
+  );
   openModal(editModal);
 }
 
@@ -104,6 +110,7 @@ function handleAddCardSubmit(evt) {
   cardList.prepend(getCardElement(newCardData));
 
   closeModal(newPostModal);
+  disableButton(cardSubmitButton, settings);
   evt.target.reset();
 }
 
