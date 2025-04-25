@@ -3,31 +3,26 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 const editModal = document.querySelector("#edit-modal");
-const editModalCloseButton = editModal.querySelector(".modal__close-button");
 const editModalNameInput = editModal.querySelector("#name");
 const editModalDescriptionInput = editModal.querySelector("#description");
 const editModalForm = editModal.querySelector(".modal__form");
 
 const newPostButton = document.querySelector(".profile__add-button");
 const newPostModal = document.querySelector("#new-post-modal");
-const newPostModalCloseButton = newPostModal.querySelector(
-  ".modal__close-button"
-);
 const newPostModalImageUrl = newPostModal.querySelector("#card-image");
 const newPostModalCaption = newPostModal.querySelector("#card-caption");
 const newPostModalForm = newPostModal.querySelector(".modal__form");
 const cardSubmitButton = newPostModal.querySelector(".modal__submit-button");
 
 const previewModal = document.querySelector("#preview-modal");
-const previewModalCloseButton = previewModal.querySelector(
-  ".modal__close-button"
-);
 const previewModalImage = previewModal.querySelector(".modal__image");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
 const closeButtons = document.querySelectorAll(".modal__close-button");
 
 const cardTemplate = document.querySelector("#card-template");
+
+const modalElements = document.querySelectorAll(".modal");
 
 const initialCards = [
   {
@@ -58,16 +53,16 @@ const initialCards = [
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", handleEscapeKeyPress);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", handleEscapeKeyPress);
 }
 
 closeButtons.forEach((button) => {
-  // Find the closest popup only once
   const popup = button.closest(".modal");
-  // Set the listener
   button.addEventListener("click", () => closeModal(popup));
 });
 
@@ -98,6 +93,14 @@ function handleProfileFormSubmit(evt) {
 profileEditButton.addEventListener("click", openEditModal);
 
 editModalForm.addEventListener("submit", handleProfileFormSubmit);
+
+const handleEscapeKeyPress = (evt) => {
+  evt.preventDefault();
+  if (evt.key === "Escape") {
+    const currentModal = document.querySelector(".modal_opened");
+    closeModal(currentModal);
+  }
+};
 
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
@@ -155,4 +158,12 @@ function getCardElement(data) {
 
 initialCards.forEach((card) => {
   cardList.append(getCardElement(card));
+});
+
+modalElements.forEach((modal) => {
+  modal.addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("modal")) {
+      closeModal(evt.target);
+    }
+  });
 });
