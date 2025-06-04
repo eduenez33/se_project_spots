@@ -1,3 +1,10 @@
+import {
+  enableValidation,
+  resetValidation,
+  disableButton,
+  settings,
+} from "./validation.js";
+
 const cardList = document.querySelector(".cards__list");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileName = document.querySelector(".profile__name");
@@ -167,3 +174,5 @@ modalElements.forEach((modal) => {
     }
   });
 });
+
+enableValidation(settings);
