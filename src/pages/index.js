@@ -1,9 +1,20 @@
+import "./index.css";
 import {
   enableValidation,
   resetValidation,
   disableButton,
   settings,
-} from "./validation.js";
+} from "../scripts/validation.js";
+import avatarSrc from "../images/avatar.jpg";
+import pencilSrc from "../images/icon_pencil.svg";
+import plusSrc from "../images/icon_plus.svg";
+
+const spotsAvatar = document.getElementById("profile-avatar");
+spotsAvatar.src = avatarSrc;
+const spotsPencilIcon = document.getElementById("pencil-icon");
+spotsPencilIcon.src = pencilSrc;
+const spotsPlusIcon = document.getElementById("plus-icon");
+spotsPlusIcon.src = plusSrc;
 
 const cardList = document.querySelector(".cards__list");
 const profileEditButton = document.querySelector(".profile__edit-button");
