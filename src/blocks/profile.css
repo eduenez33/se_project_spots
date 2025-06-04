@@ -4,7 +4,7 @@
   padding-bottom: 20px;
   margin-top: 34px;
   border-bottom: 1px solid rgba(33, 33, 33, 0.4);
-  align-items: end;
+  align-items: flex-end;
 }
 
 .profile__avatar {
