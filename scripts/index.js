@@ -95,8 +95,8 @@ profileEditButton.addEventListener("click", openEditModal);
 editModalForm.addEventListener("submit", handleProfileFormSubmit);
 
 const handleEscapeKeyPress = (evt) => {
-  evt.preventDefault();
   if (evt.key === "Escape") {
+    evt.preventDefault();
     const currentModal = document.querySelector(".modal_opened");
     closeModal(currentModal);
   }
