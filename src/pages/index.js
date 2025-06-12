@@ -37,6 +37,11 @@ const previewModal = document.querySelector("#preview-modal");
 const previewModalImage = previewModal.querySelector(".modal__image");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
+// Delete modal elements
+const deleteModal = document.querySelector("#delete-post-modal");
+const deleteModalButton = deleteModal.querySelector(".modal__delete-button");
+const deleteCancelButton = deleteModal.querySelector(".modal__cancel-button");
+
 const closeButtons = document.querySelectorAll(".modal__close-button");
 
 const cardTemplate = document.querySelector("#card-template");
@@ -206,7 +211,7 @@ function getCardElement(data) {
   });
 
   trashButton.addEventListener("click", () => {
-    cardElement.remove();
+    openModal(deleteModal);
   });
 
   cardElementImage.addEventListener("click", () => {
