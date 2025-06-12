@@ -8,6 +8,7 @@ import {
 import avatarSrc from "../images/avatar.jpg";
 import pencilSrc from "../images/icon_pencil.svg";
 import plusSrc from "../images/icon_plus.svg";
+import Api from "../utils/Api.js";
 
 const spotsAvatar = document.getElementById("profile-avatar");
 spotsAvatar.src = avatarSrc;
