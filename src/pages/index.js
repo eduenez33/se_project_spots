@@ -43,6 +43,36 @@ const cardTemplate = document.querySelector("#card-template");
 
 const modalElements = document.querySelectorAll(".modal");
 
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "a4f15128-4ba2-4653-a32c-921f0ed0e86f",
+    "Content-Type": "application/json",
+  },
+});
+
+api
+  .getInitialCards()
+  .then((result) => {
+    result.forEach((card) => {
+      cardList.append(getCardElement(card));
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+api
+  .getUserInfo()
+  .then((userInfo) => {
+    profileName.textContent = userInfo.name;
+    profileDescription.textContent = userInfo.about;
+    spotsAvatar.src = userInfo.avatar;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 const initialCards = [
   {
     name: "Santa Barbara",
