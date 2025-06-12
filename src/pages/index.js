@@ -123,8 +123,16 @@ function closeEditModal() {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
-  profileName.textContent = editModalNameInput.value;
-  profileDescription.textContent = editModalDescriptionInput.value;
+  api
+    .editUserInfo({
+      name: editModalNameInput.value,
+      about: editModalDescriptionInput.value,
+    })
+    .then((data) => {
+      profileName.textContent = data.name;
+      profileDescription.textContent = data.about;
+    })
+    .catch(console.error);
 
   closeEditModal();
 }
