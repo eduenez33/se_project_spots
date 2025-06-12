@@ -52,26 +52,16 @@ const api = new Api({
 });
 
 api
-  .getInitialCards()
-  .then((result) => {
-    result.forEach((card) => {
+  .getAppInfo()
+  .then(([cards, userInfo]) => {
+    cards.forEach((card) => {
       cardList.append(getCardElement(card));
     });
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-
-api
-  .getUserInfo()
-  .then((userInfo) => {
     profileName.textContent = userInfo.name;
     profileDescription.textContent = userInfo.about;
     spotsAvatar.src = userInfo.avatar;
   })
-  .catch((err) => {
-    console.error(err);
-  });
+  .catch(console.error);
 
 const initialCards = [
   {
