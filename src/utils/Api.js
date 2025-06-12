@@ -26,6 +26,17 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse);
   }
+
+  editUserInfo({ name, about }) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        about,
+      }),
+    }).then(this._checkResponse);
+  }
 }
 
 export default Api;
