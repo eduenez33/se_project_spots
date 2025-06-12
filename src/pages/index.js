@@ -11,6 +11,12 @@ import Api from "../utils/Api.js";
 const spotsAvatar = document.getElementById("profile-avatar");
 spotsAvatar.src = avatarSrc;
 
+// Avatar form elements
+const avatarEditModal = document.querySelector("#avatar-modal");
+const avatarEditButton = document.querySelector(".profile__avatar-edit");
+const avatarForm = avatarEditModal.querySelector(".modal__form");
+const avatarInput = avatarEditModal.querySelector("#profile-avatar-input");
+
 const cardList = document.querySelector(".cards__list");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileName = document.querySelector(".profile__name");
@@ -130,6 +136,27 @@ function handleProfileFormSubmit(evt) {
 
   closeEditModal();
 }
+
+function handleAvatarSubmit(evt) {
+  evt.preventDefault();
+
+  api
+    .editUserAvatar({
+      avatar: avatarInput.value,
+    })
+    .then((data) => {
+      spotsAvatar.src = data.avatar;
+    })
+    .catch(console.error);
+
+  closeModal(avatarEditModal);
+}
+
+avatarEditButton.addEventListener("click", () => {
+  openModal(avatarEditModal);
+});
+
+avatarForm.addEventListener("submit", handleAvatarSubmit);
 
 profileEditButton.addEventListener("click", openEditModal);
 
