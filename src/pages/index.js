@@ -7,6 +7,7 @@ import {
 } from "../scripts/validation.js";
 import avatarSrc from "../images/avatar.jpg";
 import Api from "../utils/Api.js";
+import { setButtonText } from "../utils/helpers.js";
 
 const spotsAvatar = document.getElementById("profile-avatar");
 spotsAvatar.src = avatarSrc;
@@ -128,6 +129,8 @@ function closeEditModal() {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
+  setButtonText(evt.submitter, true);
+
   api
     .editUserInfo({
       name: editModalNameInput.value,
@@ -137,13 +140,18 @@ function handleProfileFormSubmit(evt) {
       profileName.textContent = data.name;
       profileDescription.textContent = data.about;
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(evt.submitter, false);
+    });
 
   closeEditModal();
 }
 
 function handleAvatarSubmit(evt) {
   evt.preventDefault();
+
+  setButtonText(evt.submitter, true);
 
   api
     .editUserAvatar({
@@ -152,7 +160,10 @@ function handleAvatarSubmit(evt) {
     .then((data) => {
       spotsAvatar.src = data.avatar;
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(evt.submitter, false);
+    });
 
   closeModal(avatarEditModal);
 }
@@ -178,6 +189,8 @@ const handleEscapeKeyPress = (evt) => {
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
 
+  setButtonText(evt.submitter, true);
+
   api
     .addNewCard({
       name: newPostModalCaption.value,
@@ -191,7 +204,10 @@ function handleAddCardSubmit(evt) {
       };
       cardList.prepend(getCardElement(newCardData));
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(evt.submitter, false);
+    });
 
   closeModal(newPostModal);
   disableButton(cardSubmitButton, settings);
@@ -216,8 +232,24 @@ function getCardElement(data) {
   let selectedCard;
   let selectedCardId;
 
+  data.isLiked ? likeButton.classList.add("card__like-button_liked") : null;
+
   likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_liked");
+    if (!likeButton.classList.contains("card__like-button_liked")) {
+      api
+        .addLike(data._id)
+        .then((res) => {
+          likeButton.classList.toggle("card__like-button_liked");
+        })
+        .catch(console.error);
+    } else {
+      api
+        .removeLike(data._id)
+        .then((res) => {
+          likeButton.classList.toggle("card__like-button_liked");
+        })
+        .catch(console.error);
+    }
   });
 
   trashButton.addEventListener("click", () => {
@@ -243,7 +275,8 @@ function getCardElement(data) {
     openModal(deleteModal);
   }
 
-  function handleDeleteSubmit() {
+  function handleDeleteSubmit(evt) {
+    setButtonText(evt.submitter, true, "Delete", "Deleting...");
     api
       .deleteCard(selectedCardId)
       .then(() => {
@@ -259,7 +292,7 @@ function getCardElement(data) {
 
   deleteModalForm.addEventListener("submit", (evt) => {
     evt.preventDefault();
-    handleDeleteSubmit();
+    handleDeleteSubmit(evt);
   });
 
   return cardElement;
