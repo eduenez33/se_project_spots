@@ -6,15 +6,17 @@ import {
   settings,
 } from "../scripts/validation.js";
 import avatarSrc from "../images/avatar.jpg";
-import pencilSrc from "../images/icon_pencil.svg";
-import plusSrc from "../images/icon_plus.svg";
+import Api from "../utils/Api.js";
+import { setButtonText } from "../utils/helpers.js";
 
 const spotsAvatar = document.getElementById("profile-avatar");
 spotsAvatar.src = avatarSrc;
-const spotsPencilIcon = document.getElementById("pencil-icon");
-spotsPencilIcon.src = pencilSrc;
-const spotsPlusIcon = document.getElementById("plus-icon");
-spotsPlusIcon.src = plusSrc;
+
+// Avatar form elements
+const avatarEditModal = document.querySelector("#avatar-modal");
+const avatarEditButton = document.querySelector(".profile__avatar-edit");
+const avatarForm = avatarEditModal.querySelector(".modal__form");
+const avatarInput = avatarEditModal.querySelector("#profile-avatar-input");
 
 const cardList = document.querySelector(".cards__list");
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -36,38 +38,63 @@ const previewModal = document.querySelector("#preview-modal");
 const previewModalImage = previewModal.querySelector(".modal__image");
 const previewModalCaption = previewModal.querySelector(".modal__caption");
 
+// Delete modal elements
+const deleteModal = document.querySelector("#delete-post-modal");
+const deleteModalForm = deleteModal.querySelector("#delete-form");
+const deleteCancelButton = deleteModal.querySelector("#modal__cancel-button");
+
 const closeButtons = document.querySelectorAll(".modal__close-button");
 
 const cardTemplate = document.querySelector("#card-template");
 
 const modalElements = document.querySelectorAll(".modal");
 
-const initialCards = [
-  {
-    name: "Santa Barbara",
-    link: "https://images.unsplash.com/photo-1590255041502-9a2603c6fd39?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "a4f15128-4ba2-4653-a32c-921f0ed0e86f",
+    "Content-Type": "application/json",
   },
-  {
-    name: "Austin",
-    link: "https://images.unsplash.com/photo-1583097090970-4d3b940ea1a0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "Salt Lake City",
-    link: "https://images.unsplash.com/photo-1546017959-787be59bdcbb?q=80&w=1848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "Ventura",
-    link: "https://images.unsplash.com/photo-1722113448751-5dc988a64ac9?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "Dallas",
-    link: "https://images.unsplash.com/photo-1706197107449-fbd3fd1f49bc?q=80&w=2137&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    name: "San Luis Obispo",
-    link: "https://images.unsplash.com/photo-1571077597920-e2916988670d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
+});
+
+api
+  .getAppInfo()
+  .then(([cards, userInfo]) => {
+    cards.forEach((card) => {
+      cardList.append(getCardElement(card));
+    });
+    profileName.textContent = userInfo.name;
+    profileDescription.textContent = userInfo.about;
+    spotsAvatar.src = userInfo.avatar;
+  })
+  .catch(console.error);
+
+// const initialCards = [
+//   {
+//     name: "Santa Barbara",
+//     link: "https://images.unsplash.com/photo-1590255041502-9a2603c6fd39?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//   },
+//   {
+//     name: "Austin",
+//     link: "https://images.unsplash.com/photo-1583097090970-4d3b940ea1a0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//   },
+//   {
+//     name: "Salt Lake City",
+//     link: "https://images.unsplash.com/photo-1546017959-787be59bdcbb?q=80&w=1848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//   },
+//   {
+//     name: "Ventura",
+//     link: "https://images.unsplash.com/photo-1722113448751-5dc988a64ac9?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//   },
+//   {
+//     name: "Dallas",
+//     link: "https://images.unsplash.com/photo-1706197107449-fbd3fd1f49bc?q=80&w=2137&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//   },
+//   {
+//     name: "San Luis Obispo",
+//     link: "https://images.unsplash.com/photo-1571077597920-e2916988670d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//   },
+// ];
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
@@ -102,11 +129,50 @@ function closeEditModal() {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
-  profileName.textContent = editModalNameInput.value;
-  profileDescription.textContent = editModalDescriptionInput.value;
+  setButtonText(evt.submitter, true);
 
-  closeEditModal();
+  api
+    .editUserInfo({
+      name: editModalNameInput.value,
+      about: editModalDescriptionInput.value,
+    })
+    .then((data) => {
+      profileName.textContent = data.name;
+      profileDescription.textContent = data.about;
+      closeEditModal();
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(evt.submitter, false);
+    });
 }
+
+function handleAvatarSubmit(evt) {
+  evt.preventDefault();
+
+  setButtonText(evt.submitter, true);
+
+  api
+    .editUserAvatar({
+      avatar: avatarInput.value,
+    })
+    .then((data) => {
+      spotsAvatar.src = data.avatar;
+      closeModal(avatarEditModal);
+      disableButton(evt.submitter, settings);
+      evt.target.reset();
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(evt.submitter, false);
+    });
+}
+
+avatarEditButton.addEventListener("click", () => {
+  openModal(avatarEditModal);
+});
+
+avatarForm.addEventListener("submit", handleAvatarSubmit);
 
 profileEditButton.addEventListener("click", openEditModal);
 
@@ -123,16 +189,28 @@ const handleEscapeKeyPress = (evt) => {
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
 
-  const newCardData = {
-    name: newPostModalCaption.value,
-    link: newPostModalImageUrl.value,
-  };
+  setButtonText(evt.submitter, true);
 
-  cardList.prepend(getCardElement(newCardData));
-
-  closeModal(newPostModal);
-  disableButton(cardSubmitButton, settings);
-  evt.target.reset();
+  api
+    .addNewCard({
+      name: newPostModalCaption.value,
+      link: newPostModalImageUrl.value,
+    })
+    .then((data) => {
+      const newCardData = {
+        name: data.name,
+        link: data.link,
+        _id: data._id,
+      };
+      cardList.prepend(getCardElement(newCardData));
+      closeModal(newPostModal);
+      disableButton(cardSubmitButton, settings);
+      evt.target.reset();
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(evt.submitter, false);
+    });
 }
 
 newPostButton.addEventListener("click", () => {
@@ -151,12 +229,28 @@ function getCardElement(data) {
   const likeButton = cardElement.querySelector(".card__like-button");
   const trashButton = cardElement.querySelector(".card__trash-button");
 
+  data.isLiked ? likeButton.classList.add("card__like-button_liked") : null;
+
   likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_liked");
+    if (!likeButton.classList.contains("card__like-button_liked")) {
+      api
+        .addLike(data._id)
+        .then((res) => {
+          likeButton.classList.toggle("card__like-button_liked");
+        })
+        .catch(console.error);
+    } else {
+      api
+        .removeLike(data._id)
+        .then((res) => {
+          likeButton.classList.toggle("card__like-button_liked");
+        })
+        .catch(console.error);
+    }
   });
 
   trashButton.addEventListener("click", () => {
-    cardElement.remove();
+    handleDeleteCard(cardElement, data);
   });
 
   cardElementImage.addEventListener("click", () => {
@@ -167,6 +261,13 @@ function getCardElement(data) {
     openModal(previewModal);
   });
 
+  function handleDeleteCard(cardElement, data) {
+    selectedCard = cardElement;
+    selectedCardId = data._id;
+
+    openModal(deleteModal);
+  }
+
   cardElementTitle.textContent = data.name;
   cardElementImage.src = data.link;
   cardElementImage.alt = data.name;
@@ -174,8 +275,30 @@ function getCardElement(data) {
   return cardElement;
 }
 
-initialCards.forEach((card) => {
-  cardList.append(getCardElement(card));
+let selectedCard;
+let selectedCardId;
+
+function handleDeleteSubmit(evt) {
+  setButtonText(evt.submitter, true, "Delete", "Deleting...");
+  api
+    .deleteCard(selectedCardId)
+    .then(() => {
+      selectedCard.remove();
+      closeModal(deleteModal);
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(evt.submitter, false, "Delete");
+    });
+}
+
+deleteModalForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  handleDeleteSubmit(evt);
+});
+
+deleteCancelButton.addEventListener("click", () => {
+  closeModal(deleteModal);
 });
 
 modalElements.forEach((modal) => {
