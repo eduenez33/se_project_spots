@@ -159,6 +159,8 @@ function handleAvatarSubmit(evt) {
     .then((data) => {
       spotsAvatar.src = data.avatar;
       closeModal(avatarEditModal);
+      disableButton(evt.submitter, settings);
+      evt.target.reset();
     })
     .catch(console.error)
     .finally(() => {
